@@ -1,0 +1,29 @@
+NAME
+    logic::kleene - Kleene three-valued logic
+
+SYNOPSIS
+      use logic::kleene;
+
+      $a = !kleene::logic->new( somefunction() );
+
+      if ($a && $b) { ... } 
+
+DESCRIPTION
+    This module implements Kleene three-valued logic via overloading.
+
+    The third value is between true and false, and is equivalent to an
+    undefined value (as when a program has not yet returned a value).
+
+AUTHOR
+    Robert Rothenberg <rrwo at cpan.org>
+
+  Suggestions and Bug Reporting
+
+    Feedback is always welcome. Please use the CPAN Request Tracker at
+    http://rt.cpan.org to submit bug reports.
+
+LICENSE
+    Copyright (c) 2005 Robert Rothenberg. All rights reserved. This program
+    is free software; you can redistribute it and/or modify it under the
+    same terms as Perl itself.
+

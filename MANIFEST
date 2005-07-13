@@ -1,0 +1,9 @@
+Build.PL
+Changes
+Makefile.PL
+MANIFEST
+META.yml
+README
+t/logic-kleene.t
+lib/logic/kleene.pm
+SIGNATURE    Added here by Module::Build
