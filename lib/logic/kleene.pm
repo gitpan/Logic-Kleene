@@ -42,7 +42,7 @@ require 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use overload 
   "bool" => \&to_bool,
@@ -56,9 +56,7 @@ use overload
   "|"    => \&kleene_or;
 
 
-use Memoize;
-
-BEGIN { memoize(\&new); }
+my %Singletons = ( );
 
 sub new {
   my $class = shift || __PACKAGE__;
@@ -68,8 +66,10 @@ sub new {
   } else {
     $value = 0.5;
   }
+  return $Singletons{$value} if (exists $Singletons{$value});
   my $self = \$value;
   bless $self, $class;
+  return $Singletons{$value} = $self;
 }
 
 sub to_bool {

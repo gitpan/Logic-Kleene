@@ -5,7 +5,6 @@ WriteMakefile
           'NAME' => 'logic::kleene',
           'VERSION_FROM' => 'lib/logic/kleene.pm',
           'PREREQ_PM' => {
-                           'Memoize' => '0',
                            'Test::More' => '0',
                            'overload' => '0'
                          },

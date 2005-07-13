@@ -7,7 +7,6 @@ my $build = Module::Build->new
      requires => {
        'perl'             => '5.6.0',
        'overload'         => 0,
-       'Memoize'          => 0,
      },
      recommends => {
      },
