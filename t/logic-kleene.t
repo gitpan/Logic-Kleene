@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-plan tests => 78;
+plan tests => 87;
 
 use_ok("logic::kleene");
 
@@ -28,9 +28,21 @@ ok(!$b);
 
 my $c = logic::kleene->new();
 ok(defined $c);
+ok(!defined $c->to_bool);
 not_ok(!$c);
 
 my $d = undef;
+
+not_ok(!$a);
+ok(!$b);
+not_ok(!$c);
+not_ok(!!$c);
+
+not_ok(not $a);
+ok(not $b);
+not_ok(not $c);
+not_ok(not not $c);
+
 
 ok($a | $a);
 ok($a | $b);

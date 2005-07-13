@@ -42,11 +42,12 @@ require 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use overload 
   "bool" => \&to_bool,
   "!"    => \&kleene_neg,
+  "not"  => \&kleene_neg,
   "and"  => \&kleene_and,
   "or"   => \&kleene_or,
   "&&"   => \&kleene_and,

@@ -1,5 +1,9 @@
 Revision history for Perl extension logic::kleene.
 
+0.03  Wed Jul 13 22:22:00 2005
+	- added tests for not and !
+	- overload "not"
+
 0.02  Wed Jul 13 22:15:00 2005
 	- removed use of Memoize, smarter memoization
 
