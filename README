@@ -1,10 +1,34 @@
 NAME
-    logic::kleene - Kleene three-valued logic
+    Logic::Kleene - Kleene three-valued logic
+
+REQUIREMENTS
+    This module requires Perl 5.6.0 or newer. Only core modules are used.
+
+INSTALLATION
+    Installation can be done using the traditional Makefile.PL or the newer
+    Build.PL method .
+
+    Using Makefile.PL:
+
+      perl Makefile.PL
+      make test
+      make install
+
+    (On Windows platforms you should use nmake instead.)
+
+    Using Build.PL (if you have Moddule::Build installed):
+
+      perl Build.PL
+      perl Build test
+      perl Build install    
+
+    You may see warnings about undefined values during testing. This is
+    normal.
 
 SYNOPSIS
       use logic::kleene;
 
-      $a = !kleene::logic->new( somefunction() );
+      $a = !Kleene::Logic->new( somefunction() );
 
       if ($a && $b) { ... } 
 
@@ -13,6 +37,29 @@ DESCRIPTION
 
     The third value is between true and false, and is equivalent to an
     undefined value (as when a program has not yet returned a value).
+
+    The significant different is that the negation of an undefined value is
+    still undefined (and so treated as false). For example,
+
+      my $status = Kleene::Logic->new(somefunction());
+      if (!$status) {
+        print "somefunction failed";
+      }
+
+    If the status value is false, then it will print the failure message, as
+    expected. But if the status is undefined, then it will not print the
+    message.
+
+REVISION HISTORY
+    The following changes have been made since the last release:
+
+    0.04
+            - renamed to Logic::Kleene
+            - cleaned up code a bit
+            - better explanation of what the module does in documentation
+            - more tests
+            - overload "0+"
+            - overload "cmp" and "<=>"
 
 AUTHOR
     Robert Rothenberg <rrwo at cpan.org>

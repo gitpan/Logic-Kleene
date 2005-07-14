@@ -1,12 +1,41 @@
 =head1 NAME
 
-logic::kleene - Kleene three-valued logic
+Logic::Kleene - Kleene three-valued logic
+
+=begin readme
+
+=head1 REQUIREMENTS
+
+This module requires Perl 5.6.0 or newer. Only core modules are used.
+
+=head1 INSTALLATION
+
+Installation can be done using the traditional F<Makefile.PL> or the
+newer F<Build.PL> method .
+
+Using Makefile.PL:
+
+  perl Makefile.PL
+  make test
+  make install
+
+(On Windows platforms you should use F<nmake> instead.)
+
+Using Build.PL (if you have L<Moddule::Build> installed):
+
+  perl Build.PL
+  perl Build test
+  perl Build install    
+
+You may see warnings about undefined values during testing. This is normal.
+
+=end readme
 
 =head1 SYNOPSIS
 
   use logic::kleene;
 
-  $a = !kleene::logic->new( somefunction() );
+  $a = !Kleene::Logic->new( somefunction() );
 
   if ($a && $b) { ... } 
 
@@ -17,6 +46,28 @@ This module implements Kleene three-valued logic via overloading.
 The third value is between true and false, and is equivalent to
 an undefined value (as when a program has not yet returned a
 value).
+
+The significant different is that the negation of an undefined value 
+is still undefined (and so treated as false).  For example,
+
+  my $status = Kleene::Logic->new(somefunction());
+  if (!$status) {
+    print "somefunction failed";
+  }
+
+If the status value is false, then it will print the failure
+message, as expected.  But if the status is undefined, then it
+will not print the message.
+
+=begin readme
+
+=head1 REVISION HISTORY
+
+The following changes have been made since the last release:
+
+=for readme include file="Changes" type="text" start="^0.04" stop="^0.03"
+
+=end readme
 
 =head1 AUTHOR
 
@@ -35,17 +86,20 @@ modify it under the same terms as Perl itself.
 
 =cut
 
-package logic::kleene;
+package Logic::Kleene;
 
 require 5.006;
 
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use overload 
+  "0+"   => \&to_bool,
   "bool" => \&to_bool,
+  "cmp"  => \&kleene_cmp,
+  "<=>"  => \&kleene_cmp,
   "!"    => \&kleene_neg,
   "not"  => \&kleene_neg,
   "and"  => \&kleene_and,
@@ -63,6 +117,7 @@ sub new {
   my $class = shift || __PACKAGE__;
   my $value = shift;
   if (defined $value) {
+    return $value if (ref($value) && (UNIVERSAL::isa($value, __PACKAGE__)));
     $value = ($value)? 1 : 0;
   } else {
     $value = 0.5;
@@ -83,10 +138,13 @@ sub to_bool {
   }
 }
 
+sub kleene_cmp {
+  my ($a,$b) = map { __PACKAGE__->new($_) } @_;
+  return ($$a <=> $$b);
+}
+
 sub kleene_or {
-  my ($a,$b) = @_;
-  $a = __PACKAGE__->new($a) unless (UNIVERSAL::isa($a, __PACKAGE__));
-  $b = __PACKAGE__->new($b) unless (UNIVERSAL::isa($b, __PACKAGE__));
+  my ($a,$b) = map { __PACKAGE__->new($_) } @_;
   if ($$a >= $$b) {
     return $a;
   } else {
@@ -95,9 +153,7 @@ sub kleene_or {
 }
 
 sub kleene_and {
-  my ($a,$b) = @_;
-  $a = __PACKAGE__->new($a) unless (UNIVERSAL::isa($a, __PACKAGE__));
-  $b = __PACKAGE__->new($b) unless (UNIVERSAL::isa($b, __PACKAGE__));
+  my ($a,$b) = map { __PACKAGE__->new($_) } @_;
   if ($$a <= $$b) {
     return $a;
   } else {
@@ -106,8 +162,7 @@ sub kleene_and {
 }
 
 sub kleene_neg {
-  my ($a) = @_;
-  $a = __PACKAGE__->new($a) unless (UNIVERSAL::isa($a, __PACKAGE__));
+  my ($a) = map { __PACKAGE__->new($_) } @_;
   if ($$a != 0.5) {
     return __PACKAGE__->new(1-$$a);
   } else {
@@ -116,8 +171,9 @@ sub kleene_neg {
   }
 }
 
+
 sub kleene_xor {
-  my ($a,$b) = @_;
+  my ($a,$b) = map { __PACKAGE__->new($_) } @_;
   return kleene_neg(kleene_and(
     kleene_or(kleene_neg($a),$b), kleene_or(kleene_neg($b),$a)
   ));

@@ -2,7 +2,7 @@ use Module::Build;
 
 my $build = Module::Build->new
     (
-     module_name => 'logic::kleene',
+     module_name => 'Logic::Kleene',
      license => 'perl',
      requires => {
        'perl'             => '5.6.0',

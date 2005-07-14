@@ -1,13 +1,13 @@
-package main;
+#!/usr/bin/perl
 
 use strict;
 use warnings;
 
 use Test::More;
 
-plan tests => 87;
+plan tests => 99;
 
-use_ok("logic::kleene");
+use_ok("Logic::Kleene");
 
 sub not_ok {
   my ($flag, $string) = @_;
@@ -18,15 +18,15 @@ sub not_ok {
   }
 }
 
-my $a = logic::kleene->new(1);
+my $a = Logic::Kleene->new(1);
 ok(defined $a);
 ok($a);
 
-my $b = logic::kleene->new(0);
+my $b = Logic::Kleene->new(0);
 ok(defined $b);
 ok(!$b);
 
-my $c = logic::kleene->new();
+my $c = Logic::Kleene->new();
 ok(defined $c);
 ok(!defined $c->to_bool);
 not_ok(!$c);
@@ -99,7 +99,7 @@ ok(($a && 1));
 not_ok(($a && undef));
 ok(!($a && 0));
 ok((1 && $a));
-not_ok(($d && $a));
+not_ok((undef && $a));
 ok(!(0 && $a));
 
 ok($a or $a);
@@ -119,7 +119,21 @@ ok(($a and 1));
 not_ok(($a and undef));
 ok(!($a and 0));
 ok((1 and $a));
-not_ok(($d and $a));
+not_ok((undef and $a));
 ok(!(0 and $a));
 
+ok($a >= $a);
+ok($c >= $c);
+ok($b >= $b);
+
+ok($a > $b);
+ok($a > $c);
+ok($c < $a);
+ok($c > $b);
+ok($b < $a);
+ok($b < $c);
+
+ok("$a" eq "1");
+ok("$b" eq "0");
+ok("$c" eq "");  # this should output a warning
 

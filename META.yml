@@ -1,6 +1,6 @@
 --- #YAML:1.0
-name: logic-kleene
-version: 0.03
+name: Logic-Kleene
+version: 0.04
 author:
   - Robert Rothenberg <rrwo at cpan.org>
 abstract: Kleene three-valued logic
@@ -11,7 +11,7 @@ requires:
 build_requires:
   Test::More: 0
 provides:
-  logic::kleene:
-    file: lib/logic/kleene.pm
-    version: 0.03
+  Logic::Kleene:
+    file: lib/Logic/Kleene.pm
+    version: 0.04
 generated_by: Module::Build version 0.2611

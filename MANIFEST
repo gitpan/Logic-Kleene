@@ -5,5 +5,5 @@ MANIFEST
 META.yml
 README
 t/logic-kleene.t
-lib/logic/kleene.pm
+lib/Logic/Kleene.pm
 SIGNATURE    Added here by Module::Build

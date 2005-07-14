@@ -1,4 +1,12 @@
-Revision history for Perl extension logic::kleene.
+Revision history for Perl extension Logic::Kleene.
+
+0.04  Thu Jul 14 12:00:00 2005
+	- renamed to Logic::Kleene
+	- cleaned up code a bit
+	- better explanation of what the module does in documentation
+	- more tests
+	- overload "0+"
+	- overload "cmp" and "<=>"
 
 0.03  Wed Jul 13 22:22:00 2005
 	- added tests for not and !

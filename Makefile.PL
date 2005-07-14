@@ -2,8 +2,8 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-          'NAME' => 'logic::kleene',
-          'VERSION_FROM' => 'lib/logic/kleene.pm',
+          'NAME' => 'Logic::Kleene',
+          'VERSION_FROM' => 'lib/Logic/Kleene.pm',
           'PREREQ_PM' => {
                            'Test::More' => '0',
                            'overload' => '0'
