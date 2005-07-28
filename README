@@ -26,9 +26,9 @@ INSTALLATION
     normal.
 
 SYNOPSIS
-      use logic::kleene;
+      use Logic::Kleene;
 
-      $a = !Kleene::Logic->new( somefunction() );
+      $a = !kleene( somefunction() );
 
       if ($a && $b) { ... } 
 
@@ -41,7 +41,7 @@ DESCRIPTION
     The significant different is that the negation of an undefined value is
     still undefined (and so treated as false). For example,
 
-      my $status = Kleene::Logic->new(somefunction());
+      my $status = kleene(somefunction());
       if (!$status) {
         print "somefunction failed";
       }
@@ -53,13 +53,10 @@ DESCRIPTION
 REVISION HISTORY
     The following changes have been made since the last release:
 
-    0.04
-            - renamed to Logic::Kleene
-            - cleaned up code a bit
-            - better explanation of what the module does in documentation
-            - more tests
-            - overload "0+"
-            - overload "cmp" and "<=>"
+    0.05  Thu Jul 28 2005
+            - added 'kleene' function (exported by default)
+            - fixed typos in documentation
+            - added additional information to the documentation
 
 AUTHOR
     Robert Rothenberg <rrwo at cpan.org>

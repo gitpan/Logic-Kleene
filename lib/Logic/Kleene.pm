@@ -33,9 +33,9 @@ You may see warnings about undefined values during testing. This is normal.
 
 =head1 SYNOPSIS
 
-  use logic::kleene;
+  use Logic::Kleene;
 
-  $a = !Kleene::Logic->new( somefunction() );
+  $a = !kleene( somefunction() );
 
   if ($a && $b) { ... } 
 
@@ -50,7 +50,7 @@ value).
 The significant different is that the negation of an undefined value 
 is still undefined (and so treated as false).  For example,
 
-  my $status = Kleene::Logic->new(somefunction());
+  my $status = kleene(somefunction());
   if (!$status) {
     print "somefunction failed";
   }
@@ -59,13 +59,27 @@ If the status value is false, then it will print the failure
 message, as expected.  But if the status is undefined, then it
 will not print the message.
 
+=for readme stop
+
+It is important to note that
+
+  kleene(!$x)
+
+is not equivalent to
+
+  !kleene($x)
+
+since in the first case, C<$x> may not be a Kleene value.
+
+=for readme continue
+
 =begin readme
 
 =head1 REVISION HISTORY
 
 The following changes have been made since the last release:
 
-=for readme include file="Changes" type="text" start="^0.04" stop="^0.03"
+=for readme include file="Changes" type="text" start="^0.05" stop="^0.04"
 
 =end readme
 
@@ -93,7 +107,15 @@ require 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
+
+require Exporter;
+
+our @ISA = qw( Exporter );
+
+our %EXPORT_TAGS = ( "all" => [qw( kleene )] );
+our @EXPORT = qw( kleene );
+our @EXPORT_OK = ( @{ $EXPORT_TAGS{"all"} } );
 
 use overload 
   "0+"   => \&to_bool,
@@ -126,6 +148,10 @@ sub new {
   my $self = \$value;
   bless $self, $class;
   return $Singletons{$value} = $self;
+}
+
+sub kleene {
+  return __PACKAGE__->new(@_);
 }
 
 sub to_bool {

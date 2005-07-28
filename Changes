@@ -1,5 +1,10 @@
 Revision history for Perl extension Logic::Kleene.
 
+0.05  Thu Jul 28 2005
+	- added 'kleene' function (exported by default)
+	- fixed typos in documentation
+	- added additional information to the documentation
+
 0.04  Thu Jul 14 12:00:00 2005
 	- renamed to Logic::Kleene
 	- cleaned up code a bit

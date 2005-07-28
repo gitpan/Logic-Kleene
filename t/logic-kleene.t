@@ -7,7 +7,7 @@ use Test::More;
 
 plan tests => 99;
 
-use_ok("Logic::Kleene");
+use_ok("Logic::Kleene", 0.05);
 
 sub not_ok {
   my ($flag, $string) = @_;
@@ -18,15 +18,15 @@ sub not_ok {
   }
 }
 
-my $a = Logic::Kleene->new(1);
+my $a = kleene(1);
 ok(defined $a);
 ok($a);
 
-my $b = Logic::Kleene->new(0);
+my $b = kleene(0);
 ok(defined $b);
 ok(!$b);
 
-my $c = Logic::Kleene->new();
+my $c = kleene();
 ok(defined $c);
 ok(!defined $c->to_bool);
 not_ok(!$c);
